@@ -19,8 +19,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -116,54 +116,68 @@
     </section>
 
 
-    <!-- ABOUT -->
-    <section class="section" id="tentang">
-        <div class="container about-grid">
+   
+<!-- ABOUT -->
+<section class="section about-section" id="tentang">
+    <div class="container about-grid">
 
-            <div class="about-decoration">
-                <h3>About Me.</h3>
+        <div class="about-decoration">
+            <span class="about-card-kicker">A LITTLE ABOUT ME</span>
+            <div class="about-orbit" aria-hidden="true"></div>
+
+            <div class="about-decoration-content">
+                <span class="about-mark">“</span>
+                <h3>Terus belajar,<br>terus bertumbuh.</h3>
                 <p>Learning, creating, and growing through technology.</p>
             </div>
 
-            <div class="about-content">
+            <span class="about-card-index">01 / PERSONAL PROFILE</span>
+        </div>
 
-                <div class="section-heading">
-                    <span class="eyebrow">TENTANG SAYA</span>
-                    <h2>Mengenal Saya Lebih Dekat</h2>
-                </div>
+        <div class="about-content">
+            <div class="section-heading">
+                <span class="eyebrow">TENTANG SAYA</span>
+                <h2>Mengenal Saya <em>Lebih Dekat</em></h2>
+                <p class="about-intro-label">
+                    SEDIKIT CERITA TENTANG PERJALANAN SAYA
+                </p>
+            </div>
 
+            <div class="about-description">
                 <p>
                     {{ profile.about if profile else "Informasi tentang saya belum tersedia." }}
                 </p>
-
-                <div class="about-info">
-
-                    <div class="info-item">
-                        <strong>Nama</strong>
-                        <span>{{ profile.full_name if profile else "-" }}</span>
-                    </div>
-
-                    <div class="info-item">
-                        <strong>Email</strong>
-                        <span>{{ profile.email if profile and profile.email else "-" }}</span>
-                    </div>
-
-                    <div class="info-item">
-                        <strong>Lokasi</strong>
-                        <span>{{ profile.location if profile and profile.location else "-" }}</span>
-                    </div>
-
-                    <div class="info-item">
-                        <strong>Telepon</strong>
-                        <span>{{ profile.phone if profile and profile.phone else "-" }}</span>
-                    </div>
-
-                </div>
-
             </div>
 
+            <div class="about-info">
+
+                <div class="info-item">
+                    <strong>NAMA LENGKAP</strong>
+                    <span>{{ profile.full_name if profile else "-" }}</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>EMAIL</strong>
+                    <span>{{ profile.email if profile and profile.email else "-" }}</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>LOKASI</strong>
+                    <span>{{ profile.location if profile and profile.location else "-" }}</span>
+                </div>
+
+                <div class="info-item">
+                    <strong>TELEPON</strong>
+                    <span>{{ profile.phone if profile and profile.phone else "-" }}</span>
+                </div>
+
+
+            </div>
         </div>
-    </section>
+
+    </div>
+</section>
+
 
 
     <!-- SKILLS -->
@@ -357,34 +371,84 @@
     </section>
 
 
-    <!-- CONTACT -->
-    <section class="section" id="kontak">
-        <div class="container">
+   
+<!-- CONTACT -->
+<section class="section contact-section" id="kontak">
+    <div class="container">
 
-            <div class="contact-box">
+        <div class="contact-box">
+            <span class="contact-eyebrow">LET'S CONNECT</span>
 
-                <h2>Mari Terhubung</h2>
+            <h2>Mari Terhubung</h2>
 
-                <p>
-                    Terbuka untuk berdiskusi, berbagi pengalaman,
-                    dan berkolaborasi dalam berbagai kesempatan.
-                </p>
+            <p>
+                Temukan dan ikuti aktivitas saya melalui media sosial.
+                Saya terbuka untuk berbagi ide, pengalaman, dan kolaborasi.
+            </p>
 
-                {% if profile and profile.email %}
-                    <a href="mailto:{{ profile.email }}"
-                       class="btn contact-btn">
-                        Hubungi Saya
-                    </a>
-                {% else %}
-                    <a href="#tentang" class="btn contact-btn">
-                        Lihat Profil
-                    </a>
+            <div class="social-links" aria-label="Media sosial">
+
+                {% if profile and profile.instagram_url %}
+                <a href="{{ profile.instagram_url }}"
+                   class="social-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Buka Instagram">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <circle class="social-dot" cx="17.5" cy="6.5" r="1"></circle>
+                    </svg>
+
+                    <span>Instagram</span>
+                </a>
+                {% endif %}
+
+                {% if profile and profile.github_url %}
+                <a href="{{ profile.github_url }}"
+                   class="social-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Buka GitHub">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 19c-4.3 1.4-4.3-2.2-6-2.5M15 21v-3.5a3 3 0 0 0-.8-2.3c2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.4 6a4.3 4.3 0 0 0-.1-3S17.3 2.7 15 4.2a13 13 0 0 0-6 0C6.7 2.7 5.7 3 5.7 3A4.3 4.3 0 0 0 5.6 6a4.7 4.7 0 0 0-1.3 3.2c0 4.7 2.8 5.7 5.5 6A3 3 0 0 0 9 17.5V21"></path>
+                    </svg>
+
+                    <span>GitHub</span>
+                </a>
+                {% endif %}
+
+                {% if profile and profile.linkedin_url %}
+                <a href="{{ profile.linkedin_url }}"
+                   class="social-link"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   aria-label="Buka LinkedIn">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 8.5V19M5 5.5v.1M10 19v-6.2a3 3 0 0 1 6 0V19M10 10v9M3 3h18v18H3z"></path>
+                    </svg>
+
+                    <span>LinkedIn</span>
+                </a>
                 {% endif %}
 
             </div>
 
+            {% if not (profile and (profile.instagram_url or profile.github_url or profile.linkedin_url)) %}
+            <p class="social-empty">
+                Tautan media sosial belum ditambahkan.
+                Silakan isi melalui dashboard admin.
+            </p>
+            {% endif %}
+
         </div>
-    </section>
+
+    </div>
+</section>
+
 
 
     <!-- FOOTER -->
