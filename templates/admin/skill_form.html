@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5ef;
+            color: #263b32;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #d5dbd4;
+            border-radius: 6px;
+        }
+
+        button, a {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 11px 17px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #355b49;
+            color: white;
+        }
+
+        a {
+            background: #e3e9df;
+            color: #355b49;
+        }
+
+        .message {
+            background: #f5dddd;
+            padding: 10px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>{{ page_title }}</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token }}"
+        >
+
+        <label>Nama Keahlian</label>
+        <input
+            type="text"
+            name="name"
+            value="{{ skill.name if skill else '' }}"
+            placeholder="Contoh: Python"
+            required
+        >
+
+        <label>Kategori</label>
+        <input
+            type="text"
+            name="category"
+            value="{{ skill.category if skill else '' }}"
+            placeholder="Contoh: Programming"
+        >
+
+        <label>Level</label>
+        <input
+            type="text"
+            name="level"
+            value="{{ skill.level if skill else '' }}"
+            placeholder="Contoh: Beginner"
+        >
+
+        <label>Urutan Tampilan</label>
+        <input
+            type="number"
+            name="sort_order"
+            value="{{ skill.sort_order if skill else 0 }}"
+        >
+
+        <button type="submit">Simpan</button>
+
+        <a href="{{ url_for('admin_skills') }}">
+            Batal
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

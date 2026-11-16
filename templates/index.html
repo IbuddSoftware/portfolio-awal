@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if profile %}
+            {{ profile.full_name }} | Portfolio
+        {% else %}
+            Personal Portfolio
+        {% endif %}
+    </title>
+
+    <meta name="description"
+          content="Personal portfolio mahasiswa Informatika.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-wrapper">
+
+            <a href="#beranda" class="logo">
+                IbuddSoft<span>.</span>
+            </a>
+
+            <button class="menu-toggle"
+                    id="menuToggle"
+                    aria-label="Buka navigasi"
+                    aria-expanded="false">
+                ☰
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+                <li><a href="#tentang" class="nav-link">Tentang</a></li>
+                <li><a href="#keahlian" class="nav-link">Keahlian</a></li>
+                <li><a href="#pendidikan" class="nav-link">Pendidikan</a></li>
+                <li><a href="#pengalaman" class="nav-link">Pengalaman</a></li>
+                <li><a href="#proyek" class="nav-link">Proyek</a></li>
+                <li><a href="#kontak" class="nav-link">Kontak</a></li>
+            </ul>
+
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero" id="beranda">
+        <div class="container hero-grid">
+
+            <div class="hero-content">
+
+                <p class="hero-label">WELCOME TO MY PORTFOLIO</p>
+
+                <h1>
+                    Halo, saya
+                    <span>
+                        {{ profile.full_name if profile else "Nama Anda" }}
+                    </span>
+                </h1>
+
+                <h3>
+                    {{ profile.headline if profile else "Mahasiswa Informatika" }}
+                </h3>
+
+                <p class="hero-description">
+                    {{ profile.about if profile else "Selamat datang di portofolio saya." }}
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#proyek" class="btn btn-primary">
+                        Lihat Proyek
+                    </a>
+
+                    <a href="#tentang" class="btn btn-outline">
+                        Tentang Saya
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="photo-frame">
+                    {% if profile and profile.photo_url %}
+                        <img src="{{ profile.photo_url }}"
+                             alt="{{ profile.full_name }}">
+                    {% else %}
+                        <div class="photo-placeholder">
+                            Your Photo Here
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="floating-note">
+                    Informatika & Teknologi
+                    <span>Always learning and growing</span>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="section" id="tentang">
+        <div class="container about-grid">
+
+            <div class="about-decoration">
+                <h3>About Me.</h3>
+                <p>Learning, creating, and growing through technology.</p>
+            </div>
+
+            <div class="about-content">
+
+                <div class="section-heading">
+                    <span class="eyebrow">TENTANG SAYA</span>
+                    <h2>Mengenal Saya Lebih Dekat</h2>
+                </div>
+
+                <p>
+                    {{ profile.about if profile else "Informasi tentang saya belum tersedia." }}
+                </p>
+
+                <div class="about-info">
+
+                    <div class="info-item">
+                        <strong>Nama</strong>
+                        <span>{{ profile.full_name if profile else "-" }}</span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Email</strong>
+                        <span>{{ profile.email if profile and profile.email else "-" }}</span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Lokasi</strong>
+                        <span>{{ profile.location if profile and profile.location else "-" }}</span>
+                    </div>
+
+                    <div class="info-item">
+                        <strong>Telepon</strong>
+                        <span>{{ profile.phone if profile and profile.phone else "-" }}</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- SKILLS -->
+    <section class="section skills-section" id="keahlian">
+        <div class="container">
+
+            <div class="section-heading">
+                <span class="eyebrow">MY SKILLS</span>
+                <h2>Keahlian & Kompetensi</h2>
+                <p>Berbagai kemampuan yang terus saya kembangkan.</p>
+            </div>
+
+            <div class="skills-grid">
+
+                {% for skill in skills %}
+                    <div class="skill-card">
+
+                        <div class="skill-number">
+                            {{ "%02d"|format(loop.index) }}
+                        </div>
+
+                        <h3>{{ skill.name }}</h3>
+
+                        <p>{{ skill.category or "Keahlian" }}</p>
+
+                        <span class="skill-level">
+                            {{ skill.level or "Belum ditentukan" }}
+                        </span>
+
+                    </div>
+                {% else %}
+                    <p class="empty-state">
+                        Belum ada data keahlian.
+                    </p>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- EDUCATION -->
+    <section class="section" id="pendidikan">
+        <div class="container">
+
+            <div class="section-heading">
+                <span class="eyebrow">EDUCATION</span>
+                <h2>Riwayat Pendidikan</h2>
+                <p>Perjalanan pendidikan dan pengembangan akademik saya.</p>
+            </div>
+
+            <div class="timeline">
+
+                {% for item in education %}
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-card">
+
+                            <h3>{{ item.institution }}</h3>
+
+                            <h4>{{ item.major or item.degree or "" }}</h4>
+
+                            <span class="timeline-date">
+                                {{ item.start_year or "-" }}
+                                -
+                                {{ item.end_year or "Sekarang" }}
+                            </span>
+
+                            <p>{{ item.description or "" }}</p>
+
+                        </div>
+
+                    </div>
+                {% else %}
+                    <p class="empty-state">
+                        Belum ada riwayat pendidikan.
+                    </p>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="pengalaman">
+        <div class="container">
+
+            <div class="section-heading">
+                <span class="eyebrow">EXPERIENCE</span>
+                <h2>Pengalaman Organisasi</h2>
+                <p>Pengalaman kepemimpinan, organisasi, dan kegiatan.</p>
+            </div>
+
+            <div class="timeline">
+
+                {% for item in experiences %}
+                    <div class="timeline-item">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-card">
+
+                            <h3>{{ item.organization }}</h3>
+
+                            <h4>{{ item.position or "" }}</h4>
+
+                            <span class="timeline-date">
+                                {{ item.start_period or "-" }}
+                            </span>
+
+                            <p>{{ item.description or "" }}</p>
+
+                        </div>
+
+                    </div>
+                {% else %}
+                    <p class="empty-state">
+                        Belum ada pengalaman organisasi.
+                    </p>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- PROJECTS -->
+    <section class="section projects-section" id="proyek">
+        <div class="container">
+
+            <div class="section-heading">
+                <span class="eyebrow">MY PROJECTS</span>
+                <h2>Proyek Pilihan</h2>
+                <p>Beberapa proyek dan hasil pekerjaan yang pernah saya kerjakan.</p>
+            </div>
+
+            <div class="projects-grid">
+
+                {% for project in projects %}
+                    <article class="project-card">
+
+                        {% if project.image_url %}
+                            <div class="project-image">
+                                <img src="{{ project.image_url }}"
+                                     alt="{{ project.title }}"
+                                     loading="lazy">
+                            </div>
+                        {% else %}
+                            <div class="project-image project-placeholder">
+                                <span>PROJECT</span>
+                            </div>
+                        {% endif %}
+
+                        <div class="project-content">
+
+                            <h3>{{ project.title }}</h3>
+
+                            <p>{{ project.description or "" }}</p>
+
+                            <span class="project-tech">
+                                {{ project.technologies or "" }}
+                            </span>
+
+                            {% if project.project_url %}
+                                <a href="{{ project.project_url }}"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="project-link">
+                                    Lihat Proyek →
+                                </a>
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+                {% else %}
+                    <p class="empty-state">
+                        Belum ada proyek yang ditampilkan.
+                    </p>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- CONTACT -->
+    <section class="section" id="kontak">
+        <div class="container">
+
+            <div class="contact-box">
+
+                <h2>Mari Terhubung</h2>
+
+                <p>
+                    Terbuka untuk berdiskusi, berbagi pengalaman,
+                    dan berkolaborasi dalam berbagai kesempatan.
+                </p>
+
+                {% if profile and profile.email %}
+                    <a href="mailto:{{ profile.email }}"
+                       class="btn contact-btn">
+                        Hubungi Saya
+                    </a>
+                {% else %}
+                    <a href="#tentang" class="btn contact-btn">
+                        Lihat Profil
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>
+                © {{ 2026 }} 
+                {{ profile.full_name if profile else "Personal Portfolio" }}.
+                Made with <span>♥</span> and dedication.
+            </p>
+        </div>
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

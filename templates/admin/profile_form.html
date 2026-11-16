@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Profil</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5ef;
+            color: #263b32;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #68766d;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5dbd4;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        button, a {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 11px 17px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button {
+            background: #355b49;
+            color: white;
+        }
+
+        a {
+            background: #e3e9df;
+            color: #355b49;
+        }
+
+        .message {
+            padding: 12px;
+            background: #e3eadf;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            margin-top: 30px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e6df;
+        }
+
+        .hint {
+            color: #78847c;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Kelola Profil</h1>
+    <p class="subtitle">
+        Perbarui informasi pribadi yang ditampilkan pada portofolio.
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+
+        <input
+            type="hidden"
+            name="csrf_token"
+            value="{{ csrf_token }}"
+        >
+
+        <h3 class="section-title">Informasi Utama</h3>
+
+        <label>Nama Lengkap</label>
+        <input
+            type="text"
+            name="full_name"
+            value="{{ profile.full_name if profile else '' }}"
+            placeholder="Nama lengkap"
+            required
+        >
+
+        <label>Headline / Profesi</label>
+        <input
+            type="text"
+            name="headline"
+            value="{{ profile.headline if profile else '' }}"
+            placeholder="Contoh: Mahasiswa Informatika"
+        >
+
+        <label>Tentang Saya</label>
+        <textarea
+            name="about"
+            placeholder="Tuliskan deskripsi singkat tentang diri kamu."
+        >{{ profile.about if profile else '' }}</textarea>
+
+        <h3 class="section-title">Informasi Kontak</h3>
+
+        <label>Email</label>
+        <input
+            type="email"
+            name="email"
+            value="{{ profile.email if profile else '' }}"
+            placeholder="email@example.com"
+        >
+
+        <label>Nomor Telepon</label>
+        <input
+            type="text"
+            name="phone"
+            value="{{ profile.phone if profile else '' }}"
+            placeholder="Nomor telepon"
+        >
+
+        <label>Lokasi</label>
+        <input
+            type="text"
+            name="location"
+            value="{{ profile.location if profile else '' }}"
+            placeholder="Contoh: Yogyakarta, Indonesia"
+        >
+
+        <h3 class="section-title">Foto Profil</h3>
+
+        <label>URL Foto Profil</label>
+        <input
+            type="text"
+            name="photo_url"
+            value="{{ profile.photo_url if profile else '' }}"
+            placeholder="https://alamat-foto.com/foto.jpg"
+        >
+        <p class="hint">
+            Masukkan alamat URL foto yang dapat diakses secara publik.
+        </p>
+
+        <h3 class="section-title">Media Sosial</h3>
+
+        <label>GitHub</label>
+        <input
+            type="url"
+            name="github_url"
+            value="{{ profile.github_url if profile else '' }}"
+            placeholder="https://github.com/username"
+        >
+
+        <label>LinkedIn</label>
+        <input
+            type="url"
+            name="linkedin_url"
+            value="{{ profile.linkedin_url if profile else '' }}"
+            placeholder="https://linkedin.com/in/username"
+        >
+
+        <label>Instagram</label>
+        <input
+            type="url"
+            name="instagram_url"
+            value="{{ profile.instagram_url if profile else '' }}"
+            placeholder="https://instagram.com/username"
+        >
+
+        <button type="submit">Simpan Profil</button>
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Kembali
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+</html>

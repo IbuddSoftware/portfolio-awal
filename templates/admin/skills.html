@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Keahlian</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f5ef;
+            color: #263b32;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        a, button {
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 14px;
+        }
+
+        .add {
+            background: #355b49;
+            color: white;
+        }
+
+        .back {
+            color: #355b49;
+            background: #e3e9df;
+        }
+
+        .item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .item h3 {
+            margin: 0 0 8px;
+        }
+
+        .item p {
+            margin: 4px 0;
+            color: #68766d;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .edit {
+            background: #e8e5d8;
+            color: #514b38;
+        }
+
+        .delete {
+            background: #f5dddd;
+            color: #9b3333;
+        }
+
+        .message {
+            padding: 12px;
+            background: #e3eadf;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="top">
+        <div>
+            <h1>Kelola Keahlian</h1>
+            <p>Atur daftar kemampuan dan keterampilan.</p>
+        </div>
+
+        <div>
+            <a href="{{ url_for('admin_dashboard') }}" class="back">
+                Kembali
+            </a>
+
+            <a href="{{ url_for('admin_skill_new') }}" class="add">
+                + Tambah Keahlian
+            </a>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="message">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    {% if skills %}
+
+        {% for skill in skills %}
+            <div class="item">
+
+                <div>
+                    <h3>{{ skill.name }}</h3>
+                    <p>Kategori: {{ skill.category or '-' }}</p>
+                    <p>Level: {{ skill.level or '-' }}</p>
+                    <p>Urutan: {{ skill.sort_order }}</p>
+                </div>
+
+                <div class="actions">
+
+                    <a
+                        href="{{ url_for('admin_skill_edit', skill_id=skill.id) }}"
+                        class="edit"
+                    >
+                        Edit
+                    </a>
+
+                    <form
+                        action="{{ url_for('admin_skill_delete', skill_id=skill.id) }}"
+                        method="POST"
+                        onsubmit="return confirm('Yakin ingin menghapus keahlian ini?');"
+                    >
+                        <input
+                            type="hidden"
+                            name="csrf_token"
+                            value="{{ csrf_token }}"
+                        >
+
+                        <button type="submit" class="delete">
+                            Hapus
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            Belum ada data keahlian.
+        </div>
+
+    {% endif %}
+
+</div>
+</body>
+</html>

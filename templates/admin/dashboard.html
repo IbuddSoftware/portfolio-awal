@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | Portfolio</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            background: #efeee7;
+            color: #354139;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            color: #344b40;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #344b40;
+        }
+
+        .subtitle {
+            color: #858b82;
+        }
+
+        .logout {
+            background: #344b40;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .logout:hover {
+            background: #526b5c;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: #f8f7f2;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(42, 59, 48, .05);
+        }
+
+        .card p {
+            color: #858b82;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #344b40;
+        }
+
+        .links {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f8f7f2;
+            border-radius: 12px;
+        }
+
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .menu-list a {
+            display: block;
+            padding: 15px;
+            background: #efeee7;
+            color: #344b40;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: .2s;
+        }
+
+        .menu-list a:hover {
+            background: #dce3d9;
+            transform: translateY(-2px);
+        }
+
+        .website-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #a66b43;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 18px;
+            }
+
+            .cards,
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <div>
+                <h1>Dashboard Admin</h1>
+                <div class="subtitle">
+                    Selamat datang, {{ admin.username }}!
+                </div>
+            </div>
+
+           
+            <form action="{{ url_for('admin_logout') }}" method="POST">
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token }}"
+                >
+
+                <button type="submit" class="logout">
+                    Logout
+                </button>
+            </form>
+
+        </header>
+
+        <h2>Ringkasan Portofolio</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <p>Total Keahlian</p>
+                <div class="number">{{ total_skills }}</div>
+            </div>
+
+            <div class="card">
+                <p>Total Pendidikan</p>
+                <div class="number">{{ total_education }}</div>
+            </div>
+
+            <div class="card">
+                <p>Total Pengalaman</p>
+                <div class="number">{{ total_experiences }}</div>
+            </div>
+
+            <div class="card">
+                <p>Total Proyek</p>
+                <div class="number">{{ total_projects }}</div>
+            </div>
+
+        </div>
+
+        <div class="links">
+            <h2>Pengelolaan Portofolio</h2>
+
+            <p>
+                Pilih bagian yang ingin kamu kelola.
+                Perubahan data akan ditampilkan pada website portofolio.
+            </p>
+
+            <div class="menu-list">
+                <a href="{{ url_for('admin_profile') }}">
+                    Kelola Profil
+                </a>
+
+                <a href="{{ url_for('admin_projects') }}">
+                    Kelola Proyek
+                </a>
+
+                <a href="{{ url_for('admin_skills') }}">
+                    Kelola Keahlian
+                </a>
+
+                <a href="{{ url_for('admin_experiences') }}">
+                    Kelola Pengalaman
+                </a>
+            </div>
+
+            <a href="/" class="website-link" target="_blank">
+                Lihat Website Portofolio →
+            </a>
+        </div>
+
+    </div>
+</body>
+</html>

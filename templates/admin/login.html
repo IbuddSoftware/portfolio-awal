@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Portfolio</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #efeee7;
+            font-family: Arial, sans-serif;
+            color: #354139;
+            padding: 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            background: #f8f7f2;
+            padding: 38px;
+            border-radius: 16px;
+            box-shadow: 0 10px 28px rgba(42, 59, 48, .09);
+        }
+
+        h1 {
+            color: #344b40;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #858b82;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #deded3;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #829786;
+            border-color: #526b5c;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #344b40;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #526b5c;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            background: #f1e5df;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #526b5c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+
+        <h1>Admin Login</h1>
+        <p>Masuk untuk mengelola website portofolio.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('admin_login') }}">
+
+            <!-- CSRF Protection -->
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token }}"
+            >
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Masukkan username"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Masuk</button>
+
+        </form>
+
+        <a href="/" class="back-link">Kembali ke Website</a>
+
+    </div>
+</body>
+</html>
