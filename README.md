@@ -218,9 +218,9 @@ Setelah berhasil login, administrator dapat mengelola beberapa bagian portofolio
 
 Perubahan data yang dilakukan melalui halaman admin akan disimpan ke database PostgreSQL Neon.
 
-## 11. Deployment ke Render
+## 11. Deployment ke Railway
 
-Website direncanakan untuk di-deploy menggunakan Render, sedangkan database tetap menggunakan Neon PostgreSQL.
+Website direncanakan untuk di-deploy menggunakan Railway, sedangkan database tetap menggunakan Neon PostgreSQL.
 
 ### Persiapan GitHub
 
@@ -269,7 +269,7 @@ Ganti `USERNAME` dengan username GitHub sendiri.
 
 ### Environment Variables
 
-Tambahkan variabel lingkungan berikut melalui dashboard Render:
+Tambahkan variabel lingkungan berikut melalui dashboard Railway:
 
 | Key | Value |
 |---|---|
@@ -305,9 +305,9 @@ Beberapa hal yang perlu diperhatikan:
 - [x] Membuat CRUD keterampilan.
 - [x] Membuat CRUD pengalaman organisasi.
 - [x] Membuat halaman pengelolaan profil.
-- [ ] Mengunggah proyek ke GitHub.
-- [ ] Melakukan deployment ke Render.
-- [ ] Menguji website setelah deployment.
+- [x] Mengunggah proyek ke GitHub.
+- [x] Melakukan deployment ke Railway.
+- [x] Menguji website setelah deployment.
 
 ---
 
