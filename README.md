@@ -252,9 +252,9 @@ git push -u origin main
 
 Ganti `USERNAME` dengan username GitHub sendiri.
 
-### Konfigurasi Render
+### Konfigurasi Railway
 
-1. Login ke Render.
+1. Login ke Railway.
 2. Pilih **New → Web Service**.
 3. Hubungkan repository GitHub.
 4. Pilih repository `portfolio-awal`.
